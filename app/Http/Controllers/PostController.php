@@ -12,7 +12,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Posts::all()->take(15);
+        $posts = Posts::paginate(25);
         return view('posts.index', ['posts' => $posts]);
     }
 
@@ -29,8 +29,12 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
 
+        $post = new Posts;
+        $post->name = $request->name;
+        $post->email = $request->email;
+        $post->save();
+        return redirect(route('posts.index'));
     }
 
     /**
@@ -65,7 +69,11 @@ class PostController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $post = Posts::find($id);
+        $post->name = $request->name;
+        $post->email = $request->email;
+        $post->save();
+        return redirect(route('posts.index'));
     }
 
     /**

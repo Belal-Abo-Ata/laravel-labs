@@ -1,15 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.main')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Posts</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-</head>
+@section('title', 'Home')
 
-<body>
-
+@section('content')
     <table class="table">
         <thead>
             <tr>
@@ -21,19 +14,17 @@
         </thead>
         <tbody>
             @foreach ($posts as $post)
-            <tr>
-                <th scope="row">{{ $post->id }}</th>
-                <td>{{ $post->name }}</td>
-                <td>{{ $post->email }}</td>
-                <td>
-                        <button class="btn btn-primary">Edit</button>
-                        <button class="btn btn-danger">Delete</button>
-                </td>
-            </tr>
+                <tr>
+                    <th scope="row">{{ $post->id }}</th>
+                    <td>{{ $post->name }}</td>
+                    <td>{{ $post->email }}</td>
+                    <td>
+                        <a class="btn btn-primary"
+                            href="{{ route('posts.edit', ['id' => $post->id, 'name' => $post->name, 'email' => $post->email]) }}">Edit</a>
+                        <a class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
             @endforeach
         </tbody>
     </table>
-
-</body>
-
-</html>
+@endsection

@@ -10,4 +10,10 @@ class Posts extends Model
 {
     use HasFactory, SoftDeletes;
     protected $fillable = ['name', 'email'];
+
+
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 }

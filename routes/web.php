@@ -14,9 +14,11 @@ use App\Http\Controllers\PostController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get(
+    '/', function () {
+        return view('welcome');
+    }
+);
 
 
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
@@ -29,6 +31,8 @@ Route::delete('/posts/{id}', [PostController::class, 'destroy'])->name('posts.de
 Route::get('/posts/trash', [PostController::class, 'showTrash'])->name('posts.trash');
 
 
-Route::fallback(function () {
-    return "Route not found";
-});
+Route::fallback(
+    function () {
+        return "Route not found";
+    }
+);
