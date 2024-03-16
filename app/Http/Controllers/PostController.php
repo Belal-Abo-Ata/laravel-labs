@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostRequest;
 use App\Models\Posts;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -12,7 +14,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Posts::paginate(25);
+        $posts = Posts::paginate();
         return view('posts.index', ['posts' => $posts]);
     }
 
@@ -31,8 +33,11 @@ class PostController extends Controller
     {
 
         $post = new Posts;
-        $post->name = $request->name;
-        $post->email = $request->email;
+        $post->title= $request->title;
+        $post->body = $request->body;
+        $post->enabled= 1;
+        $post->published_at= now();
+        $post->user_id = Auth::id();
         $post->save();
         return redirect(route('posts.index'));
     }
@@ -57,7 +62,7 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(PostRequest $request, string $id)
     {
         $post = Posts::find($id);
 
@@ -70,8 +75,8 @@ class PostController extends Controller
     public function update(Request $request, string $id)
     {
         $post = Posts::find($id);
-        $post->name = $request->name;
-        $post->email = $request->email;
+        $post->title= $request->title;
+        $post->body = $request->body;
         $post->save();
         return redirect(route('posts.index'));
     }

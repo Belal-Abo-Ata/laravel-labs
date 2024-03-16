@@ -7,8 +7,8 @@
         <thead>
             <tr>
                 <th scope="col">ID</th>
-                <th scope="col">Name</th>
-                <th scope="col">Email</th>
+                <th scope="col">Title</th>
+                <th scope="col">Body</th>
                 <th scope="col">Action</th>
             </tr>
         </thead>
@@ -16,15 +16,18 @@
             @foreach ($posts as $post)
                 <tr>
                     <th scope="row">{{ $post->id }}</th>
-                    <td>{{ $post->name }}</td>
-                    <td>{{ $post->email }}</td>
+                    <td>{{ $post->title }}</td>
+                    <td>{{ substr($post->body, 0, 60) }}...</td>
                     <td>
                         <a class="btn btn-primary"
-                            href="{{ route('posts.edit', ['id' => $post->id, 'name' => $post->name, 'email' => $post->email]) }}">Edit</a>
+                            href="{{ route('posts.edit', ['id' => $post->id, 'title' => $post->title, 'body' => $post->body]) }}">Edit</a>
                         <a class="btn btn-danger">Delete</a>
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
+
+    {{ $posts->links() }}
+
 @endsection

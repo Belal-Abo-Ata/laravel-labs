@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 
@@ -20,19 +22,39 @@ Route::get(
     }
 );
 
+Route::get(
+    '/dashboard', function () {
+        return view('dashboard');
+    }
+)->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::middleware('auth')->group(
+    function () {
+        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    }
+);
+
+// Posts
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
-Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
+Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create')->middleware('auth');
 Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
 Route::get('/posts/{id}', [PostController::class, 'show'])->name('posts.show')->where('id', '[0-9]+');
-Route::get('/posts/{id}/edit', [PostController::class, 'edit'])->name('posts.edit')->where('id', '[0-9]+');
+Route::get('/posts/{id}/edit', [PostController::class, 'edit'])->name('posts.edit')->where('id', '[0-9]+')->middleware('auth');
 Route::put('/posts/{id}', [PostController::class, 'update'])->name('posts.update')->where('id', '[0-9]+');
 Route::delete('/posts/{id}', [PostController::class, 'destroy'])->name('posts.destroy')->where('id', '[0-9]+');
 Route::get('/posts/trash', [PostController::class, 'showTrash'])->name('posts.trash');
 
+// Users
+
+
+Route::get('/users', [UserController::class, 'index'])->name('users.index');
 
 Route::fallback(
     function () {
         return "Route not found";
     }
 );
+
+    require __DIR__.'/auth.php';
