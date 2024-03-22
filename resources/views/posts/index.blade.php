@@ -19,9 +19,10 @@
                     <td>{{ $post->title }}</td>
                     <td>{{ substr($post->body, 0, 60) }}...</td>
                     <td>
-                        <a class="btn btn-primary"
+                        <a class="btn btn-sm btn-primary"
                             href="{{ route('posts.edit', ['id' => $post->id, 'title' => $post->title, 'body' => $post->body]) }}">Edit</a>
-                        <a class="btn btn-danger">Delete</a>
+                        <a class="btn btn-sm btn-danger">Delete</a>
+                        <a href="{{ route('posts.show', ['id' => $post->id]) }}"class="btn btn-sm btn-info">Show More</a>
                     </td>
                 </tr>
             @endforeach

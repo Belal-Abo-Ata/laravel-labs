@@ -9,11 +9,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Posts extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $fillable = ['name', 'email'];
+    protected $fillable = ['title', 'body', 'enabled', 'user_id', 'image'];
 
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
+
 }

@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use App\Models\Posts;
-use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,6 +25,9 @@ class PostRequest extends FormRequest
     public function rules(): array
     {
         return [
+        'title'     =>  ['required', 'string', 'max:200'],
+        'body'      =>  ['required', 'string', 'min:1'],
+        'image'     =>  ['nullable', 'image']
         ];
     }
 }
